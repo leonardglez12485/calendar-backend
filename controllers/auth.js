@@ -22,7 +22,7 @@ const createUser = async (req, res = response) => {
     user.password = bcrypt.hashSync(password, salt);
 
     createdUser = await user.save();
-    const token = await generateJWT(logeddUser.id, logeddUser.name);
+    const token = await generateJWT(createdUser.id, createdUser.name);
     res.status(201).json({
       message: "User registered successfully",
       status: "success",
