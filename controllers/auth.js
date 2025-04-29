@@ -43,19 +43,17 @@ const createUser = async (req, res = response) => {
 
 //*Login user
 
-const login = async(req, res = response) => {
+const login = async (req, res = response) => {
   const { email, password } = req.body;
-  
 
   try {
-
     let logeddUser = await User.findOne({ email });
-  if (!logeddUser) {
-    return res.status(400).json({
-      message: "User whith this email not exists",
-      status: "error",
-    });
-  }
+    if (!logeddUser) {
+      return res.status(400).json({
+        message: "User whith this email not exists",
+        status: "error",
+      });
+    }
     const validPassword = bcrypt.compareSync(password, logeddUser.password);
     if (!validPassword) {
       return res.status(400).json({
@@ -65,31 +63,27 @@ const login = async(req, res = response) => {
     }
     const token = await generateJWT(logeddUser.id, logeddUser.name);
     res.json({
-        message: "User logged in successfully",
-        status: "success",
-        data: {
-            logeddUser,
-            token,
-        },
-      });
+      message: "User logged in successfully",
+      status: "success",
+      data: {
+        logeddUser,
+        token,
+      },
+    });
   } catch (error) {
-    
     console.log("Error logging in user:", error);
     res.status(500).json({
       message: "Internal server error",
       status: "error",
       error: error.message,
     });
-
   }
-  
 };
 
 //*Renew token*/
 const renewToken = async (req, res = response) => {
-
-    const { uid, name } = req;
-    const newToken = await generateJWT(uid, name);
+  const { uid, name } = req;
+  const newToken = await generateJWT(uid, name);
 
   res.json({
     message: "Token renewed successfully",
