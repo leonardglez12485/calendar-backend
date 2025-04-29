@@ -59,7 +59,7 @@ const updateEvent = async (req, res = response) => {
     }
     if (event.user.toString() !== userId) {
         return res.status(401).json({
-            message: "Unauthorized to update this event",
+            message: "You are not authorized to update this event",
             status: "error",
         });
     }
