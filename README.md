@@ -16,3 +16,5 @@ Este es el backend de una aplicación de calendario construida con Node.js, Expr
 
    ```bash
    npm install
+   
+3. Actualiza las variables de entorno
